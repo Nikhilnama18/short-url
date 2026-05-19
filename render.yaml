@@ -1,0 +1,40 @@
+# render.yaml — Render Blueprint for shortURL service
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: shorturl-api
+    runtime: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      # Render injects PORT automatically, but we declare it for clarity
+      - key: PORT
+        value: 8080
+
+      # --- Redis Cloud ---
+      - key: REDIS_HOST
+        sync: false  # Set in Render dashboard
+      - key: REDIS_PORT
+        sync: false
+      - key: REDIS_USERNAME
+        sync: false
+      - key: REDIS_PASSWORD
+        sync: false
+      - key: REDIS_SSL
+        value: "true"
+
+      # --- Neon PostgreSQL ---
+      - key: DATASOURCE_URL
+        sync: false  # Set in Render dashboard
+      - key: DATASOURCE_USERNAME
+        sync: false
+      - key: DATASOURCE_PASSWORD
+        sync: false
+
+      # --- App ---
+      - key: APP_HOST_URL
+        sync: false  # e.g. https://shorturl-api.onrender.com
+      - key: APP_SNOWFLAKE_MACHINE_ID
+        value: "1"
