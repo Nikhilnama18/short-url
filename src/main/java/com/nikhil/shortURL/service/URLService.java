@@ -10,7 +10,6 @@ import com.nikhil.shortURL.utils.Base62Encoder;
 import com.nikhil.shortURL.utils.SnowflakeIdGenerator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +36,7 @@ public class URLService {
 
                 String shortURL = generateShortURL(savedEntity.getAlias());
 
-                return new ShortURLResponse(savedEntity.getLongURL(), savedEntity.getAlias(), shortURL);
+                return new ShortURLResponse(savedEntity.getLongURL(), shortURL, savedEntity.getAlias());
             }catch (DataIntegrityViolationException e){
                 throw new IllegalAliasException("Alias already exists");
             }
